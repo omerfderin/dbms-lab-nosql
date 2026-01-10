@@ -6,8 +6,13 @@
     <artifactId>nosql-spark-lab</artifactId>
     <version>1.0-SNAPSHOT</version>
     <properties>
+<<<<<<< HEAD
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+=======
+        <maven.compiler.source>20</maven.compiler.source>
+        <maven.compiler.target>20</maven.compiler.target>
+>>>>>>> cf73ee49e10c66a79cf3c78bcd3c0e7875a38e3e
     </properties>
     <dependencies>
         <dependency>
@@ -36,6 +41,7 @@
             <version>2.10.1</version>
         </dependency>
     </dependencies>
+<<<<<<< HEAD
     
     <build>
         <plugins>
@@ -58,4 +64,6 @@
             </plugin>
         </plugins>
     </build>
+=======
+>>>>>>> cf73ee49e10c66a79cf3c78bcd3c0e7875a38e3e
 </project>

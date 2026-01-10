@@ -13,6 +13,7 @@ public class MongoStore {
 
     public static void init() {
         client = MongoClients.create("mongodb://localhost:27017"); // bağlantı adresi burada
+<<<<<<< HEAD
         collection = client.getDatabase("nosqllab").getCollection("students");
         collection.drop(); // eski kayıtları temizle
         String[] departments = {
@@ -45,11 +46,23 @@ public class MongoStore {
             if ((i + 1) % 1000 == 0) {
                 System.out.println("MongoDB: Inserted " + (i + 1) + " records...");
             }
+=======
+        collection = client.getDatabase("nosqllab").getCollection("ogrenciler");
+        collection.drop(); // eski kayıtları temizle
+        for (int i = 0; i < 10000; i++) {
+            String id = "2025" + String.format("%06d", i);
+            Student s = new Student(id, "Ad Soyad " + i, "Bilgisayar");
+            collection.insertOne(Document.parse(gson.toJson(s)));
+>>>>>>> cf73ee49e10c66a79cf3c78bcd3c0e7875a38e3e
         }
     }
 
     public static Student get(String id) {
+<<<<<<< HEAD
         Document doc = collection.find(new Document("student_no", id)).first();
+=======
+        Document doc = collection.find(new Document("ogrenciNo", id)).first();
+>>>>>>> cf73ee49e10c66a79cf3c78bcd3c0e7875a38e3e
         return doc != null ? gson.fromJson(doc.toJson(), Student.class) : null;
     }
 }

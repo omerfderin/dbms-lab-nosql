@@ -12,6 +12,7 @@ public class HazelcastStore {
 
     public static void init() {
         hz = HazelcastClient.newHazelcastClient(); // config dosyasına bağlanır
+<<<<<<< HEAD
         map = hz.getMap("students");
         String[] departments = {
             "Classical Turkish Music",
@@ -43,6 +44,13 @@ public class HazelcastStore {
             if ((i + 1) % 1000 == 0) {
                 System.out.println("Hazelcast: Inserted " + (i + 1) + " records...");
             }
+=======
+        map = hz.getMap("ogrenciler");
+        for (int i = 0; i < 10000; i++) {
+            String id = "2025" + String.format("%06d", i);
+            Student s = new Student(id, "Ad Soyad " + i, "Bilgisayar");
+            map.put(id, s);
+>>>>>>> cf73ee49e10c66a79cf3c78bcd3c0e7875a38e3e
         }
     }
 
