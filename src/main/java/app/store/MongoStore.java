@@ -1,10 +1,14 @@
 
 package app.store;
 
-import com.mongodb.client.*;
 import org.bson.Document;
-import app.model.Student;
+
 import com.google.gson.Gson;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+
+import app.model.Student;
 
 public class MongoStore {
     static MongoClient client;
@@ -12,10 +16,9 @@ public class MongoStore {
     static Gson gson = new Gson();
 
     public static void init() {
-        client = MongoClients.create("mongodb://localhost:27017"); // bağlantı adresi burada
-<<<<<<< HEAD
+        client = MongoClients.create("mongodb://localhost:27017");
         collection = client.getDatabase("nosqllab").getCollection("students");
-        collection.drop(); // eski kayıtları temizle
+        collection.drop();
         String[] departments = {
             "Classical Turkish Music",
             "Turkish Folk Music",
@@ -44,25 +47,13 @@ public class MongoStore {
             Student s = new Student(id, name, department);
             collection.insertOne(Document.parse(gson.toJson(s)));
             if ((i + 1) % 1000 == 0) {
-                System.out.println("MongoDB: Inserted " + (i + 1) + " records...");
+                System.out.println("MongoDB: " + (i + 1) + " kayıt eklendi...");
             }
-=======
-        collection = client.getDatabase("nosqllab").getCollection("ogrenciler");
-        collection.drop(); // eski kayıtları temizle
-        for (int i = 0; i < 10000; i++) {
-            String id = "2025" + String.format("%06d", i);
-            Student s = new Student(id, "Ad Soyad " + i, "Bilgisayar");
-            collection.insertOne(Document.parse(gson.toJson(s)));
->>>>>>> cf73ee49e10c66a79cf3c78bcd3c0e7875a38e3e
         }
     }
 
     public static Student get(String id) {
-<<<<<<< HEAD
         Document doc = collection.find(new Document("student_no", id)).first();
-=======
-        Document doc = collection.find(new Document("ogrenciNo", id)).first();
->>>>>>> cf73ee49e10c66a79cf3c78bcd3c0e7875a38e3e
         return doc != null ? gson.fromJson(doc.toJson(), Student.class) : null;
     }
 }

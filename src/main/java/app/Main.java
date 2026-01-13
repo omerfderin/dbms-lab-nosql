@@ -1,7 +1,5 @@
-
 package app;
 
-<<<<<<< HEAD
 import com.google.gson.Gson;
 
 import app.model.Student;
@@ -10,37 +8,30 @@ import app.store.MongoStore;
 import app.store.RedisStore;
 import static spark.Spark.get;
 import static spark.Spark.port;
-=======
-import static spark.Spark.*;
-import com.google.gson.Gson;
-import app.store.*;
->>>>>>> cf73ee49e10c66a79cf3c78bcd3c0e7875a38e3e
 
 public class Main {
     public static void main(String[] args) {
         port(8080);
         Gson gson = new Gson();
 
-<<<<<<< HEAD
         try {
-            System.out.println("Initializing Redis...");
+            System.out.println("Redis başlatılıyor...");
             RedisStore.init();
-            System.out.println("Redis initialized successfully!");
+            System.out.println("Redis başarıyla başlatıldı!");
 
-            System.out.println("Initializing Hazelcast...");
+            System.out.println("Hazelcast başlatılıyor...");
             HazelcastStore.init();
-            System.out.println("Hazelcast initialized successfully!");
+            System.out.println("Hazelcast başarıyla başlatıldı!");
 
-            System.out.println("Initializing MongoDB...");
+            System.out.println("MongoDB başlatılıyor...");
             MongoStore.init();
-            System.out.println("MongoDB initialized successfully!");
+            System.out.println("MongoDB başarıyla başlatıldı!");
         } catch (Exception e) {
-            System.err.println("Error during initialization: " + e.getMessage());
+            System.err.println("Başlatma hatası: " + e.getMessage());
             e.printStackTrace();
             return;
         }
 
-        // Redis endpoint
         get("/nosql-lab-rd/*", (req, res) -> {
             try {
                 res.type("application/json");
@@ -49,16 +40,15 @@ public class Main {
                 Student student = RedisStore.get(studentId);
                 if (student == null) {
                     res.status(404);
-                    return gson.toJson(new ErrorResponse("Student not found"));
+                    return gson.toJson(new ErrorResponse("Öğrenci bulunamadı"));
                 }
                 return gson.toJson(student);
             } catch (Exception e) {
                 res.status(500);
-                return gson.toJson(new ErrorResponse("Error: " + e.getMessage()));
+                return gson.toJson(new ErrorResponse("Hata: " + e.getMessage()));
             }
         });
 
-        // Hazelcast endpoint
         get("/nosql-lab-hz/*", (req, res) -> {
             res.type("application/json");
             String path = req.pathInfo();
@@ -66,7 +56,6 @@ public class Main {
             return gson.toJson(HazelcastStore.get(studentId));
         });
 
-        // MongoDB endpoint
         get("/nosql-lab-mon/*", (req, res) -> {
             res.type("application/json");
             String path = req.pathInfo();
@@ -74,8 +63,8 @@ public class Main {
             return gson.toJson(MongoStore.get(studentId));
         });
 
-        System.out.println("Spark server started on http://localhost:8080");
-        System.out.println("Endpoints ready:");
+        System.out.println("Spark sunucusu http://localhost:8080 adresinde başlatıldı");
+        System.out.println("Hazır endpoint'ler:");
         System.out.println("  - http://localhost:8080/nosql-lab-rd/student_no=2025000001");
         System.out.println("  - http://localhost:8080/nosql-lab-hz/student_no=2025000001");
         System.out.println("  - http://localhost:8080/nosql-lab-mon/student_no=2025000001");
@@ -86,19 +75,5 @@ public class Main {
         ErrorResponse(String error) {
             this.error = error;
         }
-=======
-        RedisStore.init();
-        HazelcastStore.init();
-        MongoStore.init();
-
-        get("/nosql-lab-rd/ogrenci_no=:id", (req, res) ->
-            gson.toJson(RedisStore.get(req.params(":id"))));
-
-        get("/nosql-lab-hz/ogrenci_no=:id", (req, res) ->
-            gson.toJson(HazelcastStore.get(req.params(":id"))));
-
-        get("/nosql-lab-mon/ogrenci_no=:id", (req, res) ->
-            gson.toJson(MongoStore.get(req.params(":id"))));
->>>>>>> cf73ee49e10c66a79cf3c78bcd3c0e7875a38e3e
     }
 }
